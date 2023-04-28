@@ -1,40 +1,37 @@
-/* 1. Создать список типа ArrayList<String>.
-Поместить в него как строки, так и целые числа.
-Пройти по списку, найти и удалить целые числа.
-Пример: {"Яблоко", "11", "13", "Апельсин", "Дыня", "17"} -> {"Яблоко", "Апельсин", "Дыня"} */
-
+/* Реализуйте структуру телефонной книги с помощью HashMap,
+учитывая, что 1 человек может иметь несколько телефонов.
+ */
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import java.util.HashMap;
+import java.util.Map;
 public class Task1 {
-    public static void main(String[] args) {
-        ArrayList<String> strList = new ArrayList<>();
-        strList.add("'Яблоко'");
-        strList.add(Integer.toString(11));
-        strList.add(Integer.toString(13));
-        strList.add("'Апельсин'");
-        strList.add("'Дыня'");
-        strList.add(Integer.toString(17));
-
-        System.out.print("strList => ");
-        for (int i=0; i<strList.size(); i++)
-            System.out.print(strList.get(i) + "  ");
-        System.out.println();
-
-        ArrayList<String> strList2 = new ArrayList<String>();
-        strList2.add("11");
-        strList2.add("13");
-        strList2.add("17");
-        strList.removeAll(strList2);
-
-        System.out.print("strList2 => ");
-        for (int i=0; i<strList.size(); i++) {
-            System.out.print(strList.get(i) + " ");
+    public static void addNumber(String key, int value, Map<String, ArrayList<Integer>> map){
+        if (map.containsKey(key)) {
+            map.get(key).add(value);
+        } else {
+            ArrayList<Integer> list = new ArrayList<>();
+            list.add(value);
+            map.put(key, list);
         }
 
-
-
-
+    }
+    public static void printBook(Map<String, ArrayList<Integer>> map){
+        for (var item : map.entrySet()) {
+            String phones = "";
+            for(int el: item.getValue()){
+                phones = phones + el + ", ";
+            }
+            System.out.printf("%s: %s \n", item.getKey(), phones);
+        }
+    }
+    public static void main(String[] args) {
+        Map<String, ArrayList<Integer>> bookPhone = new HashMap<>();
+        addNumber("Ivanov", 123, bookPhone);
+        addNumber("Ivanov", 1234, bookPhone);
+        addNumber("Petrov", 546585, bookPhone);
+        addNumber("Sidorov", 8956477, bookPhone);
+        addNumber("Ivanov", 12356233, bookPhone);
+        addNumber("Petrov", 787897, bookPhone);
+        printBook(bookPhone);
     }
 }
